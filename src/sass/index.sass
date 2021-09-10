@@ -1,0 +1,28 @@
+$fontSize: 16px
+$fontFamily: Roboto, sans-serif
+
+$borderRadius: 10px
+
+*
+  margin: 0
+  padding: 0
+  box-sizing: border-box
+
+html
+  font-size: $fontSize
+  font-family: $fontFamily
+  -webkit-font-smoothing: antialiased
+  -moz-osx-font-smoothing: grayscale
+
+body
+  display: flex
+  flex-direction: row
+  align-items: center
+  justify-content: center
+  height: 100vh
+  background: #a9fdb7
+
+@import app
+@import components/button
+@import components/control
+@import components/timer

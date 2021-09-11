@@ -23,15 +23,10 @@ export const reducer = (state = initState, action: IAction): IStore => {
         sessionLength: action.payload,
       };
 
-    case ActionName.SET_PLAY:
+    case ActionName.SET_PLAYPAUSE:
       return {
         ...state,
-        isPause: false,
-      };
-    case ActionName.SET_PAUSE:
-      return {
-        ...state,
-        isPause: true,
+        isPause: !state.isPause,
       };
 
     default:

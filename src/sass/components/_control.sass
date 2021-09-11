@@ -1,8 +1,47 @@
-$iconSize: 48px
-  
-svg
-  width: $iconSize
-  height: $iconSize
+$iconSize: 30px
+$buttonColor: #00a759
+$buttonColorHover: red
 
-  path
-    color: #be0000
+.control
+  display: flex
+  flex-direction: column
+  align-items: center
+  justify-content: center
+  padding: 10px
+  border: 1px solid black
+
+  &__title
+
+  &__button-wrapper
+    display: flex
+    flex-direction: row
+    align-items: center
+
+  &__button
+    display: flex
+    border: none
+    background: none
+    border-radius: 50%
+    cursor: pointer
+
+    &:hover
+      background: $buttonColorHover
+
+    & > svg
+      width: $iconSize
+      height: $iconSize
+      
+      & > path
+        color: $buttonColor
+
+    &--add
+    &--subtract
+
+  &__value
+    min-width: 36px
+    text-align: center
+    font-size: 1.4rem
+    font-weight: bold
+
+  &__title
+    margin-bottom: 4px

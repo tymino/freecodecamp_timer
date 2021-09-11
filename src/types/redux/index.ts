@@ -1,8 +1,7 @@
 export enum ActionName {
   SET_BREAK = 'SET_BREAK',
   SET_SESSION = 'SET_SESSION',
-  SET_PLAY = 'SET_PLAY',
-  SET_PAUSE = 'SET_PAUSE',
+  SET_PLAYPAUSE = 'SET_PLAYPAUSE',
   SET_REFRESH = 'SET_REFRESH',
 }
 
@@ -25,19 +24,15 @@ interface ISetSessionAction {
   type: ActionName.SET_SESSION;
   payload: number;
 }
-interface ISetPlayAction {
-  type: ActionName.SET_PLAY;
-}
-interface ISetPauseAction {
-  type: ActionName.SET_PAUSE;
+interface ISetPlayPauseAction {
+  type: ActionName.SET_PLAYPAUSE;
 }
 interface ISetRefreshAction {
-  type: ActionName.SET_PAUSE;
+  type: ActionName.SET_REFRESH;
 }
 
 export type IAction =
   | ISetBreakAction
   | ISetSessionAction
-  | ISetPlayAction
-  | ISetPauseAction
+  | ISetPlayPauseAction
   | ISetRefreshAction;

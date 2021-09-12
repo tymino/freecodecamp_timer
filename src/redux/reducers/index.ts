@@ -10,17 +10,23 @@ const initState: IStore = {
   timer: DEFAULT_SESSION_LENGTH,
 };
 
+const checkLength = (prevTime: number, actionPayload: number): number => {
+  const newTime = prevTime + actionPayload;
+  return newTime > 60 ? 60 : newTime < 1 ? 1 : newTime;
+};
+
 const reducer = (state = initState, action: IAction): IStore => {
   switch (action.type) {
     case ActionName.SET_BREAK:
       return {
         ...state,
-        breakLength: action.payload,
+        breakLength: checkLength(state.breakLength, action.payload),
       };
+
     case ActionName.SET_SESSION:
       return {
         ...state,
-        sessionLength: action.payload,
+        sessionLength: checkLength(state.sessionLength, action.payload),
       };
 
     case ActionName.SET_PLAYPAUSE:

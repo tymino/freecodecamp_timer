@@ -1,6 +1,11 @@
 import React from 'react';
 
-const Timer: React.FC = () => {
+interface ITimerProps {
+  isPause: boolean;
+  timer: number;
+}
+
+const Timer: React.FC<ITimerProps> = ({ isPause, timer }) => {
   return (
     <div>
       Timer

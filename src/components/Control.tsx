@@ -1,17 +1,31 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+
+import { IAction } from '../types/redux';
 
 interface IControlProps {
   nameID: string;
   title: string;
   value: number;
+  setAction: (indeCrement: number) => IAction;
 }
 
-const Control: React.FC<IControlProps> = ({ nameID, title, value = 55 }) => {
+const Control: React.FC<IControlProps> = ({ nameID, title, value, setAction }) => {
+  const dispatch = useDispatch();
+
+  const handleDecrement = () => dispatch(setAction(-1));
+  const handleIncrement = () => dispatch(setAction(1));
+
   return (
     <div className="control">
-      <h3 id={`${nameID}-label`} className="control__title">{title}</h3>
+      <h3 id={`${nameID}-label`} className="control__title">
+        {title}
+      </h3>
       <div className="control__button-wrapper">
-        <button id={`${nameID}-decrement`} className="control__button control__button--add">
+        <button
+          id={`${nameID}-decrement`}
+          className="control__button control__button--add"
+          onClick={handleDecrement}>
           <svg
             aria-hidden="true"
             focusable="false"
@@ -23,9 +37,14 @@ const Control: React.FC<IControlProps> = ({ nameID, title, value = 55 }) => {
           </svg>
         </button>
 
-        <div id={`${nameID}-length`} className="control__value">{value}</div>
+        <div id={`${nameID}-length`} className="control__value">
+          {value}
+        </div>
 
-        <button id={`${nameID}-increment`} className="control__button control__button--subtract">
+        <button
+          id={`${nameID}-increment`}
+          className="control__button control__button--subtract"
+          onClick={handleIncrement}>
           <svg
             aria-hidden="true"
             focusable="false"

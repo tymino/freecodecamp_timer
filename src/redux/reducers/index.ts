@@ -10,7 +10,7 @@ const initState: IStore = {
   timer: DEFAULT_SESSION_LENGTH,
 };
 
-export const reducer = (state = initState, action: IAction): IStore => {
+const reducer = (state = initState, action: IAction): IStore => {
   switch (action.type) {
     case ActionName.SET_BREAK:
       return {
@@ -33,3 +33,5 @@ export const reducer = (state = initState, action: IAction): IStore => {
       return state;
   }
 };
+
+export default reducer;

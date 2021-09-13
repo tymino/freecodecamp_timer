@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { setTimer } from '../redux/actions';
+import { setTimer, setPlayPause, setRefresh } from '../redux/actions';
 
 interface ITimerProps {
   breakOrSession: boolean;
@@ -11,21 +11,17 @@ interface ITimerProps {
 const Timer: React.FC<ITimerProps> = ({ breakOrSession, isPause, timer }) => {
   const dispatch = useDispatch();
 
+  const handlePlayPause = () => dispatch(setPlayPause());
+  const handleRefresh = () => dispatch(setRefresh());
+
   const correctTime = (value: number) => {
     const floorValue = Math.floor(value);
 
-    if (floorValue === 0) {
-      return `00`;
-    } else if (floorValue < 10) {
-      return `0${floorValue}`;
-    } else {
-      return floorValue;
-    }
+    if (floorValue === 0) return `00`;
+    if (floorValue < 10) return `0${floorValue}`;
+
+    return floorValue;
   };
-
-  const handlePlayPause = () => {};
-
-  const handleRefresh = () => {};
 
   React.useEffect(() => {
     let interval: any = null;
@@ -44,7 +40,9 @@ const Timer: React.FC<ITimerProps> = ({ breakOrSession, isPause, timer }) => {
         {`${correctTime(timer / 60)}:${correctTime(timer % 60)}`}
       </div>
       <div className="timer__btn-container">
-        <button className="timer__button timer__button--playpause">
+        <button
+          className="timer__button timer__button--playpause"
+          onClick={handlePlayPause}>
           <svg
             aria-hidden="true"
             focusable="false"
@@ -56,7 +54,9 @@ const Timer: React.FC<ITimerProps> = ({ breakOrSession, isPause, timer }) => {
             />
           </svg>
         </button>
-        <button className="timer__button timer__button--refresh">
+        <button
+          className="timer__button timer__button--refresh"
+          onClick={handleRefresh}>
           <svg
             aria-hidden="true"
             focusable="false"

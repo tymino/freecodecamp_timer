@@ -42,7 +42,7 @@ const reducer = (state = initState, action: IAction): IStore => {
     case ActionName.SET_PLAYPAUSE:
       return {
         ...state,
-        // isPause: !state.isPause,
+        isPause: !state.isPause,
       };
 
     case ActionName.SET_REFRESH:

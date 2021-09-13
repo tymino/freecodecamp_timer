@@ -7,14 +7,15 @@ interface IControlProps {
   nameID: string;
   title: string;
   value: number;
+  isPause: boolean;
   setAction: (indeCrement: number) => IAction;
 }
 
-const Control: React.FC<IControlProps> = ({ nameID, title, value, setAction }) => {
+const Control: React.FC<IControlProps> = React.memo(({ nameID, title, value, isPause, setAction }) => {
   const dispatch = useDispatch();
 
-  const handleDecrement = () => dispatch(setAction(-1));
-  const handleIncrement = () => dispatch(setAction(1));
+  const handleDecrement = () => isPause ? dispatch(setAction(-1)) : false;
+  const handleIncrement = () => isPause ? dispatch(setAction(1)) : false;
 
   return (
     <div className="control">
@@ -58,6 +59,6 @@ const Control: React.FC<IControlProps> = ({ nameID, title, value, setAction }) =
       </div>
     </div>
   );
-};
+});
 
 export default Control;

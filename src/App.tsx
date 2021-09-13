@@ -7,17 +7,17 @@ import Control from './components/Control';
 import Timer from './components/Timer';
 
 const App: React.FC = () => {
-  const { breakLength, sessionLength, isPause, timer } = useTypedSelector((state) => state);
+  const { breakLength, sessionLength, breakOrSession, isPause, timer } = useTypedSelector((state) => state);
 
   return (
     <div className="app">
       <h1 className="app__title">25 + 5 Clock</h1>
       <div className="app__control-wrapper">
-        <Control nameID="break" title="Break Length" value={breakLength} setAction={setBreak} />
-        <Control nameID="session" title="Session Length" value={sessionLength} setAction={setSession} />
+        <Control nameID="break" title="Break Length" value={breakLength} isPause={isPause} setAction={setBreak} />
+        <Control nameID="session" title="Session Length" value={sessionLength} isPause={isPause} setAction={setSession} />
       </div>
       <div className="app__timer-wrapper">
-        <Timer isPause={isPause} timer={timer} />
+        <Timer isPause={isPause} timer={timer} breakOrSession={breakOrSession} />
       </div>
     </div>
   );

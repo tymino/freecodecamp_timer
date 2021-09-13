@@ -1,13 +1,11 @@
 import { ActionName, IStore, IAction } from '../../types/redux';
 
-const DEFAULT_BREAK_LENGTH = 5;
-const DEFAULT_SESSION_LENGTH = 25;
-
 const initState: IStore = {
-  breakLength: DEFAULT_BREAK_LENGTH,
-  sessionLength: DEFAULT_SESSION_LENGTH,
-  isPause: true,
-  timer: DEFAULT_SESSION_LENGTH,
+  breakLength: 5,
+  sessionLength: 1,
+  breakOrSession: false,
+  isPause: false,
+  timer: 1 * 60,
 };
 
 const checkLength = (prevTime: number, actionPayload: number): number => {
@@ -29,10 +27,27 @@ const reducer = (state = initState, action: IAction): IStore => {
         sessionLength: checkLength(state.sessionLength, action.payload),
       };
 
+    case ActionName.SET_BREAKORSESSION:
+      return {
+        ...state,
+        breakOrSession: !state.breakOrSession,
+      };
+
+    case ActionName.SET_TIMER:
+      return {
+        ...state,
+        timer: state.timer - 1,
+      };
+
     case ActionName.SET_PLAYPAUSE:
       return {
         ...state,
-        isPause: !state.isPause,
+        // isPause: !state.isPause,
+      };
+
+    case ActionName.SET_REFRESH:
+      return {
+        ...initState,
       };
 
     default:

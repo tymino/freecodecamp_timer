@@ -11,7 +11,7 @@ export enum ActionName {
 export interface IStore {
   breakLength: number;
   sessionLength: number;
-  breakOrSession: boolean;
+  isBreakTime: boolean;
   isPause: boolean;
   timer: number;
 }

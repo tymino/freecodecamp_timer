@@ -7,7 +7,7 @@ import Control from './components/Control';
 import Timer from './components/Timer';
 
 const App: React.FC = () => {
-  const { breakLength, sessionLength, breakOrSession, isPause, timer } = useTypedSelector((state) => state);
+  const { breakLength, sessionLength, isBreakTime: breakOrSession, isPause, timer } = useTypedSelector((state) => state);
 
   return (
     <div className="app">

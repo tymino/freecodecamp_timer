@@ -1,11 +1,14 @@
 import { ActionName, IStore, IAction } from '../../types/redux';
 
+const BREAK_LENGTH = 5;
+const SESSION_LENGTH = 25;
+
 const initState: IStore = {
-  breakLength: 5,
-  sessionLength: 1,
-  breakOrSession: false,
-  isPause: false,
-  timer: 1 * 60,
+  breakLength: BREAK_LENGTH,
+  sessionLength: SESSION_LENGTH,
+  isBreakTime: false,
+  isPause: true,
+  timer: SESSION_LENGTH * 60,
 };
 
 const checkLength = (prevTime: number, actionPayload: number): number => {
@@ -19,25 +22,38 @@ const reducer = (state = initState, action: IAction): IStore => {
       return {
         ...state,
         breakLength: checkLength(state.breakLength, action.payload),
+        timer: state.isBreakTime ? checkLength(state.breakLength, action.payload) * 60 : state.timer,
       };
 
     case ActionName.SET_SESSION:
       return {
         ...state,
         sessionLength: checkLength(state.sessionLength, action.payload),
+        timer: state.isBreakTime ? state.timer : checkLength(state.sessionLength, action.payload) * 60,
       };
 
     case ActionName.SET_BREAKORSESSION:
       return {
         ...state,
-        breakOrSession: !state.breakOrSession,
+        isBreakTime: !state.isBreakTime,
       };
 
-    case ActionName.SET_TIMER:
+    case ActionName.SET_TIMER: {
+      const localNewTime = state.timer - 1;
+
+      if (localNewTime < 1) {
+        return {
+          ...state,
+          isBreakTime: !state.isBreakTime,
+          timer: !state.isBreakTime ? state.breakLength * 60 : state.sessionLength * 60,
+        };
+      }
+
       return {
         ...state,
-        timer: state.timer - 1,
+        timer: localNewTime,
       };
+    }
 
     case ActionName.SET_PLAYPAUSE:
       return {

@@ -11,6 +11,8 @@ interface ITimerProps {
 const Timer: React.FC<ITimerProps> = ({ breakOrSession, isPause, timer }) => {
   const dispatch = useDispatch();
 
+  const redTextClass = timer < 60 ? 'alert' : '';
+
   const handlePlayPause = () => dispatch(setPlayPause());
   const handleRefresh = () => dispatch(setRefresh());
 
@@ -35,8 +37,8 @@ const Timer: React.FC<ITimerProps> = ({ breakOrSession, isPause, timer }) => {
 
   return (
     <div className="timer">
-      <h2 className="timer__title">{breakOrSession ? 'Break' : 'Session'}</h2>
-      <div className="timer__value">
+      <h2 className={`timer__title ${redTextClass}`}>{breakOrSession ? 'Break' : 'Session'}</h2>
+      <div className={`timer__value ${redTextClass}`}>
         {`${correctTime(timer / 60)}:${correctTime(timer % 60)}`}
       </div>
       <div className="timer__btn-container">

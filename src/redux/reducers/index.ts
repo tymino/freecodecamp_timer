@@ -9,6 +9,7 @@ const initState: IStore = {
   isBreakTime: false,
   isPause: true,
   timer: SESSION_LENGTH * 60,
+  audio: new Audio('./BeepSound.wav'),
 };
 
 const checkLength = (prevTime: number, actionPayload: number): number => {
@@ -22,14 +23,18 @@ const reducer = (state = initState, action: IAction): IStore => {
       return {
         ...state,
         breakLength: checkLength(state.breakLength, action.payload),
-        timer: state.isBreakTime ? checkLength(state.breakLength, action.payload) * 60 : state.timer,
+        timer: state.isBreakTime
+          ? checkLength(state.breakLength, action.payload) * 60
+          : state.timer,
       };
 
     case ActionName.SET_SESSION:
       return {
         ...state,
         sessionLength: checkLength(state.sessionLength, action.payload),
-        timer: state.isBreakTime ? state.timer : checkLength(state.sessionLength, action.payload) * 60,
+        timer: state.isBreakTime
+          ? state.timer
+          : checkLength(state.sessionLength, action.payload) * 60,
       };
 
     case ActionName.SET_BREAKORSESSION:
@@ -45,7 +50,9 @@ const reducer = (state = initState, action: IAction): IStore => {
         return {
           ...state,
           isBreakTime: !state.isBreakTime,
-          timer: !state.isBreakTime ? state.breakLength * 60 : state.sessionLength * 60,
+          timer: !state.isBreakTime
+            ? state.breakLength * 60
+            : state.sessionLength * 60,
         };
       }
 
@@ -65,6 +72,21 @@ const reducer = (state = initState, action: IAction): IStore => {
       return {
         ...initState,
       };
+
+    case ActionName.PLAY_AUDIO: {
+      state.audio.volume = 0.1;
+      const resp = state.audio.play();
+
+      if (resp !== undefined) {
+        resp.catch((error: Error) => {
+          // console.log(error);
+        });
+      }
+
+      return {
+        ...state,
+      };
+    }
 
     default:
       return state;

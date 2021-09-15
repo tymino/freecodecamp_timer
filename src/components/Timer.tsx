@@ -1,14 +1,19 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { setTimer, setPlayPause, setRefresh } from '../redux/actions';
+import {
+  setTimer,
+  setPlayPause,
+  setRefresh,
+  playAudio,
+} from '../redux/actions';
 
 interface ITimerProps {
-  breakOrSession: boolean;
+  isBreakTime: boolean;
   isPause: boolean;
   timer: number;
 }
 
-const Timer: React.FC<ITimerProps> = ({ breakOrSession, isPause, timer }) => {
+const Timer: React.FC<ITimerProps> = ({ isBreakTime, isPause, timer }) => {
   const dispatch = useDispatch();
 
   const redTextClass = timer < 60 ? 'alert' : '';
@@ -26,6 +31,10 @@ const Timer: React.FC<ITimerProps> = ({ breakOrSession, isPause, timer }) => {
   };
 
   React.useEffect(() => {
+    dispatch(playAudio());
+  }, [dispatch, isBreakTime]);
+
+  React.useEffect(() => {
     let interval: any = null;
 
     interval = setInterval(() => {
@@ -37,7 +46,9 @@ const Timer: React.FC<ITimerProps> = ({ breakOrSession, isPause, timer }) => {
 
   return (
     <div className="timer">
-      <h2 className={`timer__title ${redTextClass}`}>{breakOrSession ? 'Break' : 'Session'}</h2>
+      <h2 className={`timer__title ${redTextClass}`}>
+        {isBreakTime ? 'Break' : 'Session'}
+      </h2>
       <div className={`timer__value ${redTextClass}`}>
         {`${correctTime(timer / 60)}:${correctTime(timer % 60)}`}
       </div>

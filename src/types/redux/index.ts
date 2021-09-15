@@ -5,6 +5,7 @@ export enum ActionName {
   SET_TIMER = 'SET_TIMER',
   SET_PLAYPAUSE = 'SET_PLAYPAUSE',
   SET_REFRESH = 'SET_REFRESH',
+  PLAY_AUDIO = 'PLAY_AUDIO',
 }
 
 // store
@@ -14,6 +15,7 @@ export interface IStore {
   isBreakTime: boolean;
   isPause: boolean;
   timer: number;
+  audio: any;
 }
 
 // reducers
@@ -45,10 +47,15 @@ interface ISetRefreshAction {
   type: ActionName.SET_REFRESH;
 }
 
+interface IPlayAudioAction {
+  type: ActionName.PLAY_AUDIO;
+}
+
 export type IAction =
   | ISetBreakAction
   | ISetSessionAction
   | ISetBreakOrSessionAction
   | ISetTimerAction
   | ISetPlayPauseAction
-  | ISetRefreshAction;
+  | ISetRefreshAction
+  | IPlayAudioAction;
